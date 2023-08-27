@@ -1,0 +1,39 @@
+void solve(string s,stack<string>&st){
+       if(s.empty()){
+           return;
+       }
+       if(s.length()==1 && s[0]=='.'){
+           return;
+       }
+       else if(s.length()==2 && s[0]=='.' && s[1]=='.'){
+           if(!st.empty())
+              st.pop();
+           return;
+       }
+       else{
+           st.push(s);
+       }
+   }
+    string simplifyPath(string path) {
+      stack<string>st;
+      string s,ans;
+      for(int i=1;i<path.length();i++){
+          if(path[i]=='/'){
+              solve(s,st);
+              s="";
+          }
+          else if(path[i]!='/'){
+              s=s+path[i];
+          }
+      } 
+      solve(s,st);
+      if(st.empty()){
+          return "/";
+      }
+      while(!st.empty()){
+          ans="/"+st.top()+ans;
+          st.pop();
+      }
+      return ans;
+    }
+};
