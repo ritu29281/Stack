@@ -1,0 +1,22 @@
+Input: head = [2,1,5]
+Output: [5,5,0]
+CODE:
+
+vector<int> nextLargerNodes(ListNode* head) {
+      vector<int>ll;
+      while(head){
+          ll.push_back(head->val);
+          head=head->next;
+      }  
+      vector<int>ans(ll.size());
+      stack<int>st;
+      for(int i=0;i<ll.size();i++){
+          while(!st.empty() && ll[i]>ll[st.top()]){
+              int c=st.top();
+              st.pop();
+              ans[c]=ll[i];
+          }
+          st.push(i);
+      }
+      return ans;
+    }
