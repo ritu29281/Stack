@@ -1,0 +1,45 @@
+Example 1:
+Input: s = "3[a]2[bc]"
+Output: "aaabcbc"
+
+Example 2:
+Input: s = "3[a2[c]]"
+Output: "accaccacc"
+Code:
+ string decodeString(string s) {
+       stack<string>st;
+       for(auto ch: s){
+           if(ch==']'){
+               string stringtorepeat="";
+               while(!st.empty() && st.top()!="["){
+                   string top=st.top();
+                   stringtorepeat=stringtorepeat+top;
+                   st.pop();
+               }
+               st.pop();
+               string num="";
+               while(!st.empty() && isdigit(st.top()[0])){
+                   num=num+st.top();
+                   st.pop();
+               }
+               reverse(num.begin(),num.end());
+               int n= stoi(num);
+               string decode="";
+               while(n--){
+                   decode=decode+stringtorepeat;
+               }
+              st.push(decode);
+           }
+           else{
+               string a(1,ch);
+               st.push(a);
+           }
+       } 
+       string ans="";
+       while(!st.empty()){
+           ans=ans+st.top();
+           st.pop();
+       }
+       reverse(ans.begin(),ans.end());
+       return ans;
+    }
