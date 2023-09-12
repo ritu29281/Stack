@@ -1,0 +1,23 @@
+Input: cars = [[1,2],[2,1],[4,3],[7,2]]
+Output: [1.00000,-1.00000,3.00000,-1.00000]
+Explanation: After exactly one second, the first car will collide with the second car, and form a car fleet with speed 1 m/s. After exactly 3 seconds, the third car will collide with the fourth car, and form a car fleet with speed 2 m/s.
+CODE:
+ vector<double> getCollisionTimes(vector<vector<int>>& cars) {
+        vector<double>ans(cars.size(),-1);
+        stack<int>st;
+        for(int i=cars.size()-1;i>=0;i--){
+            while(!st.empty() && cars[st.top()][1]>=cars[i][1]){
+                st.pop();
+            }
+            while(!st.empty()){
+                double collision=(double)(cars[st.top()][0]-cars[i][0])/(cars[i][1]-cars[st.top()][1]);
+                if(ans[st.top()]==-1 || collision<=ans[st.top()]){
+                  ans[i]=collision;
+                  break;
+                }
+                st.pop();
+            }
+            st.push(i);
+        }
+        return ans;
+    }
