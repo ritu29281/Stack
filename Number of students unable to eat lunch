@@ -1,0 +1,35 @@
+  int countStudents(vector<int>& students, vector<int>& sandwiches) {
+     stack<int>st;
+     queue<int>q;
+        int sum=0,sand=0;
+       for(int i=0;i<students.size();i++){
+           q.push(students[i]);
+           sum+=students[i];
+       }
+       for(int i=sandwiches.size()-1;i>=0;i--){
+           st.push(sandwiches[i]);
+           sand+=sandwiches[i];
+       }
+        if(sum==sand){
+            return 0;
+        }
+       while(true){
+           int fnode=q.front();
+           if(fnode==st.top()){
+               st.pop();
+               q.pop();
+               sum=sum-fnode;
+               sand=sand-st.top();
+           }else{
+              q.pop();
+              q.push(fnode);
+              if(q.size()==sum || sum==0){
+                   break;
+              }
+
+           }
+           
+       }
+        return q.size();
+        
+    }
